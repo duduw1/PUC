@@ -1,2 +1,2 @@
 Inteligencia atificial 
-\n Professor: Pedro Americo
+Professor: Pedro Americo
