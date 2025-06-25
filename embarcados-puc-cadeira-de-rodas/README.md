@@ -5,6 +5,19 @@ Projeto de cadeira de rodas controlada por movimentos da cabeça, utilizando vis
 ## 🚀 Descrição
 Este projeto permite controlar uma cadeira de rodas simulada através de movimentos da cabeça, usando algoritmos de detecção facial (dlib/mediapipe) e integração com simuladores.
 
+## 📝 Resumo Técnico
+O sistema detecta a inclinação e direção da cabeça do usuário através da webcam, traduzindo esses movimentos em comandos para a cadeira de rodas simulada no ambiente CoppeliaSim.
+
+### Bibliotecas Principais
+- **OpenCV (`cv2`)**: Captura e processa imagens da webcam em tempo real.
+- **dlib**: Detecção facial e extração de pontos do rosto (landmarks).
+- **mediapipe**: Alternativa ao dlib para detecção de pontos do rosto e pose corporal.
+- **numpy**: Cálculos matemáticos e manipulação de arrays.
+- **tkinter**: Interface gráfica do usuário.
+- **Pillow (PIL)**: Manipulação e exibição de imagens na interface.
+- **threading**: Execução simultânea da detecção e interface.
+- **sim (API do CoppeliaSim)**: Integração com o simulador para movimentar a cadeira de rodas virtual.
+
 ## 📂 Estrutura dos Arquivos
 - `1-move_automatic.py` — Controle automático (restaurado)
 - `2-move_manual.py` — Controle manual (restaurado)
