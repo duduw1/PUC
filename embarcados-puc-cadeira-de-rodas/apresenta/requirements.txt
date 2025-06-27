@@ -1,0 +1,29 @@
+# Dependências para o projeto Cadeira de Rodas Inteligente - PUC
+# Sistema de controle por movimentos da cabeça usando visão computacional
+
+# Processamento de imagem e visão computacional
+opencv-python==4.8.1.78
+mediapipe==0.10.7
+dlib==19.24.2
+
+# Computação numérica e matemática
+numpy==1.24.3
+
+# Interface gráfica
+Pillow==10.0.1
+
+# Controle de mouse (para modo manual)
+pynput==1.7.6
+
+# Utilitários
+# tkinter vem incluído com Python
+# threading vem incluído com Python
+# collections vem incluído com Python
+# time vem incluído com Python
+# sys vem incluído com Python
+# os vem incluído com Python
+
+# Dependências opcionais para desenvolvimento
+# matplotlib==3.7.2  # Para visualização de dados
+# jupyter==1.0.0     # Para notebooks de desenvolvimento
+# pytest==7.4.0      # Para testes unitários 

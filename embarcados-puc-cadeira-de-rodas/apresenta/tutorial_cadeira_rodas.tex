@@ -1,0 +1,728 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\UseRawInputEncoding
+\setlength{\headheight}{14.5pt}
+
+% Configurações de geometria
+\geometry{margin=2.5cm}
+
+% Configurações de cores para código
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Configuração do lstlisting
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Configurações de cabeçalho e rodapé
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Cadeira de Rodas Inteligente - PUC}
+\lhead{Tutorial de Instalação e Uso}
+\rfoot{Página \thepage}
+
+% Configurações de títulos
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+% Configurações do hyperref
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Tutorial Cadeira de Rodas Inteligente},
+    pdfpagemode=FullScreen,
+}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries Cadeira de Rodas Inteligente\par}
+    \vspace{0.5cm}
+    
+    {\Large\bfseries Tutorial Completo de Instalação e Uso\par}
+    \vspace{1cm}
+    
+    {\large Projeto de Embarcados - PUC\par}
+    \vspace{0.5cm}
+    
+    {\large Controle por Movimentos da Cabeça\par}
+    \vspace{1cm}
+    
+    {\large Integração de sistemas de controle e visão computacional\\para automatização de cadeiras de rodas com comandos faciais\par}
+    \vspace{1cm}
+
+    
+    \vfill
+    
+    {\large \today\par}
+    
+    \vspace{1cm}
+    
+    {\large \textbf{Autores:} Robson Duarte Vicente e Vinicius Oliveira Ribas\par}
+    \vspace{0.5cm}
+    
+    {\large \textbf{Professor:} Mario Guimaraes Buratto\par}
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introdução}
+
+Este documento apresenta um tutorial completo para instalação, configuração e uso do sistema de controle de cadeira de rodas inteligente desenvolvido para a disciplina de Embarcados na PUC. O sistema utiliza visão computacional para detectar movimentos da cabeça do usuário e traduzi-los em comandos para uma cadeira de rodas simulada.
+
+\subsection{Visão Geral do Sistema}
+
+O projeto consiste em um sistema de controle diferencial que permite:
+
+\begin{itemize}
+    \item Detecção de movimentos da cabeça em tempo real
+    \item Controle de direção (esquerda/direita) através de rotação da cabeça
+    \item Controle de velocidade (frente/trás) através de inclinação da cabeça
+    \item Interface gráfica intuitiva com feedback visual
+    \item Integração com simulador CoppeliaSim
+    \item Múltiplos modos de controle (automático e manual)
+\end{itemize}
+
+\subsection{Tecnologias Utilizadas}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Tecnologia} & \textbf{Propósito} \\
+\hline
+Python 3.8+ & Linguagem principal \\
+OpenCV & Processamento de imagem \\
+MediaPipe & Detecção facial e pose \\
+dlib & Detecção de landmarks faciais \\
+Tkinter & Interface gráfica \\
+CoppeliaSim & Simulação da cadeira de rodas \\
+NumPy & Cálculos matemáticos \\
+\hline
+\end{tabular}
+\caption{Tecnologias principais do projeto}
+\end{table}
+
+\section{Requisitos do Sistema}
+
+\subsection{Requisitos de Hardware}
+
+\begin{itemize}
+    \item \textbf{Processador}: Intel i5 ou AMD equivalente (ou superior)
+    \item \textbf{RAM}: Mínimo 8GB, recomendado 16GB
+    \item \textbf{Webcam}: Resolução mínima 640x480, recomendado 720p ou superior
+    \item \textbf{Espaço em disco}: 2GB livres para instalação
+    \item \textbf{Sistema operacional}: Windows 10/11, Linux ou macOS
+\end{itemize}
+
+\subsection{Requisitos de Software}
+
+\begin{itemize}
+    \item \textbf{Python}: Versão 3.8 ou superior
+    \item \textbf{CoppeliaSim}: Versão 4.5 ou superior (para simulação)
+    \item \textbf{Webcam funcional} com drivers atualizados
+    \item \textbf{Ambiente de desenvolvimento}: IDE ou editor de código
+\end{itemize}
+
+\section{Instalação}
+
+\subsection{1. Preparação do Ambiente}
+
+\subsubsection{Instalação do Python}
+
+\begin{enumerate}
+    \item Acesse \url{https://www.python.org/downloads/}
+    \item Baixe a versão mais recente do Python 3.8+
+    \item Durante a instalação, marque a opção "Add Python to PATH"
+    \item Verifique a instalação executando no terminal:
+\end{enumerate}
+
+\begin{lstlisting}[language=bash]
+python --version
+pip --version
+\end{lstlisting}
+
+\subsubsection{Clone do Repositório}
+
+\begin{lstlisting}[language=bash]
+git clone https://github.com/duduw1/puc.git
+cd embarcados-puc-cadeira-de-rodas
+\end{lstlisting}
+
+\subsection{2. Instalação das Dependências}
+
+\subsubsection{Criação do Ambiente Virtual (Recomendado)}
+
+\begin{lstlisting}[language=bash]
+# Criar ambiente virtual
+python -m venv venv
+
+# Ativar ambiente virtual
+# Windows:
+venv\Scripts\activate
+# Linux/macOS:
+source venv/bin/activate
+\end{lstlisting}
+
+\subsubsection{Instalação dos Pacotes}
+
+Crie um arquivo \texttt{requirements.txt} com o seguinte conteúdo:
+
+\begin{lstlisting}
+opencv-python==4.8.1.78
+mediapipe==0.10.7
+dlib==19.24.2
+numpy==1.24.3
+Pillow==10.0.1
+pynput==1.7.6
+tkinter
+\end{lstlisting}
+
+Execute a instalação:
+
+\begin{lstlisting}[language=bash]
+pip install -r requirements.txt
+\end{lstlisting}
+
+\subsection{3. Configuração de Arquivos Especiais}
+
+\subsubsection{Download do Modelo dlib}
+
+O arquivo \texttt{shape\_predictor\_68\_face\_landmarks.dat} é necessário para o funcionamento do dlib:
+
+\begin{enumerate}
+    \item Acesse: \url{http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2}
+    \item Baixe o arquivo (95MB)
+    \item Extraia o arquivo .dat
+    \item Coloque na pasta raiz do projeto
+\end{enumerate}
+
+\subsubsection{Configuração do CoppeliaSim}
+
+\begin{enumerate}
+    \item Baixe o CoppeliaSim em: \url{https://www.coppeliarobotics.com/downloads}
+    \item Instale o software
+    \item Abra o arquivo \texttt{FUNCIONAL COM TESTE 15.ttt} no CoppeliaSim
+    \item Configure a porta 19997 para comunicação
+\end{enumerate}
+
+\section{Configuração do Sistema}
+
+\subsection{1. Configuração da Webcam}
+
+\subsubsection{Verificação da Webcam}
+
+Execute o seguinte código para testar a webcam:
+
+\begin{lstlisting}[language=python]
+import cv2
+
+# Testar webcam
+cap = cv2.VideoCapture(0)
+if cap.isOpened():
+    print("Webcam funcionando corretamente")
+    ret, frame = cap.read()
+    if ret:
+        print(f"Resolução: {frame.shape[1]}x{frame.shape[0]}")
+    cap.release()
+else:
+    print("Erro ao acessar webcam")
+\end{lstlisting}
+
+\subsubsection{Ajuste de Configurações}
+
+Se necessário, ajuste as configurações da webcam:
+
+\begin{lstlisting}[language=python]
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+cap.set(cv2.CAP_PROP_FPS, 30)
+\end{lstlisting}
+
+\subsection{2. Configuração do CoppeliaSim}
+
+\subsubsection{Inicialização da Simulação}
+
+\begin{enumerate}
+    \item Abra o CoppeliaSim
+    \item Carregue o arquivo \texttt{FUNCIONAL COM TESTE 15.ttt}
+    \item Inicie a simulação (botão play)
+    \item Verifique se a cadeira de rodas está visível na cena
+\end{enumerate}
+
+\subsubsection{Configuração da API}
+
+O arquivo \texttt{sim.py} contém a API para comunicação com o CoppeliaSim. Verifique se a conexão está funcionando:
+
+\begin{lstlisting}[language=python]
+import sim
+import simConst
+
+# Testar conexão
+sim.simxFinish(-1)
+clientID = sim.simxStart('127.0.0.1', 19997, True, True, 5000, 5)
+if clientID != -1:
+    print("Conectado ao CoppeliaSim")
+else:
+    print("Falha na conexão")
+\end{lstlisting}
+
+\section{Modos de Operação}
+
+\subsection{1. Modo Automático (MediaPipe)}
+
+O arquivo \texttt{6-mediapipe\_melhorar.py} oferece o controle mais avançado:
+
+\begin{lstlisting}[language=bash]
+python 6-mediapipe_melhorar.py
+\end{lstlisting}
+
+\subsubsection{Características do Modo Automático}
+
+\begin{itemize}
+    \item Detecção facial com MediaPipe
+    \item Controle de sensibilidade ajustável
+    \item Interface gráfica completa
+    \item Detecção de piscadas para ativação
+    \item Sistema de trava por inatividade
+    \item Feedback visual em tempo real
+\end{itemize}
+
+\subsubsection{Controles do Modo Automático}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Movimento} & \textbf{Ação} \\
+\hline
+Inclinar cabeça para frente & Avançar \\
+Inclinar cabeça para trás & Recuar \\
+Girar cabeça para esquerda & Virar à esquerda \\
+Girar cabeça para direita & Virar à direita \\
+Piscar duas vezes & Ativar/desativar sistema \\
+\hline
+\end{tabular}
+\caption{Controles do modo automático}
+\end{table}
+
+\subsection{2. Modo Manual (Mouse)}
+
+O arquivo \texttt{1-move\_automatic.py} oferece controle por mouse:
+
+\begin{lstlisting}[language=bash]
+python 1-move_automatic.py
+\end{lstlisting}
+
+\subsubsection{Características do Modo Manual}
+
+\begin{itemize}
+    \item Controle por movimento do mouse
+    \item Interface simples
+    \item Sensibilidade ajustável
+    \item Ideal para testes e calibração
+\end{itemize}
+
+\subsection{3. Modo dlib (Alternativo)}
+
+O arquivo \texttt{5-dlib\_melhorado.py} usa dlib para detecção:
+
+\begin{lstlisting}[language=bash]
+python 5-dlib_melhorado.py
+\end{lstlisting}
+
+\subsubsection{Características do Modo dlib}
+
+\begin{itemize}
+    \item Detecção facial com dlib
+    \item 68 pontos de referência facial
+    \item Maior precisão, menor velocidade
+    \item Requer arquivo de modelo específico
+\end{itemize}
+
+\section{Interface do Usuário}
+
+\subsection{Elementos da Interface}
+
+\subsubsection{Janela Principal}
+
+A interface principal contém:
+
+\begin{itemize}
+    \item \textbf{Visualização da câmera}: Mostra o feed da webcam com landmarks
+    \item \textbf{Setas direcionais}: Indicam a direção do movimento
+    \item \textbf{Sliders de sensibilidade}: Ajustam a resposta do sistema
+    \item \textbf{Indicadores de status}: Mostram o estado do sistema
+\end{itemize}
+
+\subsubsection{Controles de Sensibilidade}
+
+\begin{itemize}
+    \item \textbf{Sensibilidade Direita/Esquerda}: Controla a resposta aos movimentos horizontais
+    \item \textbf{Sensibilidade Cima/Baixo}: Controla a resposta aos movimentos verticais
+    \item \textbf{Faixa de valores}: 0.5 a 3.0 (padrão: 1.0)
+\end{itemize}
+
+\subsection{Indicadores Visuais}
+
+\subsubsection{Cores das Setas}
+
+\begin{itemize}
+    \item \textbf{Vermelho claro}: Movimento suave
+    \item \textbf{Vermelho médio}: Movimento moderado
+    \item \textbf{Vermelho escuro}: Movimento intenso
+\end{itemize}
+
+\subsubsection{Status do Sistema}
+
+\begin{itemize}
+    \item \textbf{Verde}: Sistema ativo e funcionando
+    \item \textbf{Vermelho}: Sistema bloqueado ou com erro
+    \item \textbf{Amarelo}: Sistema em calibração
+\end{itemize}
+
+\section{Calibração e Ajustes}
+
+\subsection{1. Calibração Inicial}
+
+\subsubsection{Posicionamento}
+
+\begin{enumerate}
+    \item Sente-se a uma distância de 50-80cm da webcam
+    \item Mantenha o rosto centralizado na tela
+    \item Evite iluminação muito forte ou muito fraca
+    \item Remova óculos refletivos se possível
+\end{enumerate}
+
+\subsubsection{Calibração do Sistema}
+
+\begin{enumerate}
+    \item Execute o programa
+    \item Mantenha a cabeça em posição neutra por 3 segundos
+    \item O sistema detectará automaticamente a posição de referência
+    \item Aguarde a mensagem "Calibração concluída"
+\end{enumerate}
+
+\subsection{2. Ajustes de Sensibilidade}
+
+\subsubsection{Ajuste Fino}
+
+\begin{enumerate}
+    \item Comece com sensibilidade 1.0
+    \item Teste movimentos pequenos da cabeça
+    \item Aumente a sensibilidade se necessário
+    \item Diminua se os movimentos forem muito sensíveis
+\end{enumerate}
+
+\subsubsection{Valores Recomendados}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Tipo de Usuário} & \textbf{Sensibilidade Recomendada} \\
+\hline
+Iniciante & 0.8 - 1.2 \\
+Intermediário & 1.0 - 1.5 \\
+Avançado & 1.5 - 2.0 \\
+\hline
+\end{tabular}
+\caption{Sensibilidade por nível de experiência}
+\end{table}
+
+\section{Solução de Problemas}
+
+\subsection{1. Problemas Comuns}
+
+\subsubsection{Webcam não detectada}
+
+\begin{lstlisting}[language=python]
+# Verificar dispositivos disponíveis
+import cv2
+
+for i in range(10):
+    cap = cv2.VideoCapture(i)
+    if cap.isOpened():
+        print(f"Webcam encontrada no índice {i}")
+        cap.release()
+\end{lstlisting}
+
+\subsubsection{Erro de conexão com CoppeliaSim}
+
+\begin{enumerate}
+    \item Verifique se o CoppeliaSim está rodando
+    \item Confirme a porta 19997 está livre
+    \item Reinicie o CoppeliaSim
+    \item Verifique o firewall do sistema
+\end{enumerate}
+
+\subsubsection{Baixa performance}
+
+\begin{itemize}
+    \item Reduza a resolução da webcam
+    \item Feche outros programas
+    \item Use o modo dlib em vez do MediaPipe
+    \item Ajuste os parâmetros de detecção
+\end{itemize}
+
+\subsection{2. Logs e Debug}
+
+\subsubsection{Habilitar Logs Detalhados}
+
+Adicione ao código:
+
+\begin{lstlisting}[language=python]
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+\end{lstlisting}
+
+\subsubsection{Verificação de Performance}
+
+\begin{lstlisting}[language=python]
+import time
+
+start_time = time.time()
+# Código a ser medido
+end_time = time.time()
+print(f"Tempo de execução: {end_time - start_time:.3f} segundos")
+\end{lstlisting}
+
+\section{Desenvolvimento e Extensões}
+
+\subsection{1. Estrutura do Código}
+
+\subsubsection{Arquivos Principais}
+
+\begin{itemize}
+    \item \texttt{6-mediapipe\_melhorar.py}: Versão mais avançada
+    \item \texttt{5-dlib\_melhorado.py}: Versão com dlib
+    \item \texttt{1-move\_automatic.py}: Controle por mouse
+    \item \texttt{sim.py}: API do CoppeliaSim
+    \item \texttt{simConst.py}: Constantes da API
+\end{itemize}
+
+\subsubsection{Funções Principais}
+
+\begin{lstlisting}[language=python]
+# Funções de detecção
+def calculate_pitch_using_nose(landmarks)
+def calculate_yaw_using_eyes(landmarks)
+def eye_aspect_ratio(landmarks, eye_indices)
+
+# Funções de controle
+def send_coppelia_command(left_wheel_speed, right_wheel_speed)
+def update_arrows_based_on_control(yaw_control, pitch_control)
+
+# Funções de interface
+def create_arrow(canvas, direction, color, intensity)
+def update_camera_frame(frame)
+\end{lstlisting}
+
+\subsection{2. Personalizações}
+
+\subsubsection{Modificar Controles}
+
+Para alterar os controles, edite as funções de mapeamento:
+
+\begin{lstlisting}[language=python]
+def get_direction_names(yaw_control, pitch_control):
+    # Personalizar aqui os nomes das direções
+    pass
+\end{lstlisting}
+
+\subsubsection{Adicionar Novos Modos}
+
+Crie novos arquivos seguindo a estrutura:
+
+\begin{lstlisting}[language=python]
+# Importações necessárias
+import cv2
+import numpy as np
+import tkinter as tk
+# ... outras importações
+
+# Função principal
+def main():
+    # Inicialização
+    # Loop principal
+    # Interface
+    pass
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\section{Considerações de Segurança}
+
+\subsection{1. Segurança Física}
+
+\begin{itemize}
+    \item Sempre teste em ambiente simulado primeiro
+    \item Mantenha distância segura de obstáculos
+    \item Tenha um método de parada de emergência
+    \item Monitore o sistema constantemente
+\end{itemize}
+
+\subsection{2. Segurança de Dados}
+
+\begin{itemize}
+    \item Não compartilhe imagens da webcam
+    \item Use o sistema apenas em ambientes privados
+    \item Desative a câmera quando não estiver em uso
+    \item Mantenha o software atualizado
+\end{itemize}
+
+\section{Suporte}
+
+Para dúvidas e suporte:
+
+\begin{itemize}
+    \item \textbf{Issues}: Use o sistema de issues do GitHub
+    \item \textbf{Documentação}: Consulte este tutorial
+    \item \textbf{Comunidade}: Participe dos fóruns de discussão
+\end{itemize}
+
+\section{Autores}
+
+\begin{itemize}
+    \item \textbf{Robson Duarte Vicente} - Desenvolvimento e implementação
+    \item \textbf{Vinicius Oliveira Ribas} - Desenvolvimento e implementação
+    \item \textbf{Mario Guimaraes Buratto} - Orientação e supervisão
+\end{itemize}
+
+\section{Referências e Links}
+
+\subsection{Repositório do Projeto}
+
+O código fonte completo deste projeto está disponível no GitHub:
+
+\begin{itemize}
+    \item \textbf{Repositório Principal}: \url{https://github.com/duduw1/PUC/tree/main/embarcados-puc-cadeira-de-rodas}
+    \item \textbf{Issues e Discussões}: Use o sistema de issues do GitHub para reportar problemas ou sugerir melhorias
+    \item \textbf{Contribuições}: Pull requests são bem-vindos para melhorar o projeto
+\end{itemize}
+
+\subsection{Recursos Adicionais}
+
+\begin{itemize}
+    \item \textbf{CoppeliaSim}: \url{https://www.coppeliarobotics.com/}
+    \item \textbf{MediaPipe}: \url{https://mediapipe.dev/}
+    \item \textbf{dlib}: \url{http://dlib.net/}
+    \item \textbf{OpenCV}: \url{https://opencv.org/}
+\end{itemize}
+
+\section{Conclusão}
+
+Este tutorial apresentou uma visão completa do sistema de controle de cadeira de rodas inteligente. O projeto demonstra a aplicação prática de visão computacional e sistemas embarcados para melhorar a qualidade de vida de pessoas com mobilidade reduzida.
+
+\subsection{Próximos Passos}
+
+\begin{itemize}
+    \item Teste todos os modos de operação
+    \item Ajuste as configurações conforme necessário
+    \item Explore as possibilidades de personalização
+    \item Considere contribuir para o desenvolvimento
+\end{itemize}
+
+\appendix
+
+\section{Apêndice A: Comandos Úteis}
+
+\subsection{Comandos do Terminal}
+
+\begin{lstlisting}[language=bash]
+# Verificar versão do Python
+python --version
+
+# Listar pacotes instalados
+pip list
+
+# Atualizar pip
+python -m pip install --upgrade pip
+
+# Instalar pacote específico
+pip install nome_do_pacote
+
+# Criar requirements.txt
+pip freeze > requirements.txt
+\end{lstlisting}
+
+\subsection{Comandos do CoppeliaSim}
+
+\begin{itemize}
+    \item \textbf{Play}: Iniciar simulação
+    \item \textbf{Pause}: Pausar simulação
+    \item \textbf{Stop}: Parar simulação
+    \item \textbf{Reset}: Reiniciar simulação
+\end{itemize}
+
+\section{Apêndice B: Configurações Avançadas}
+
+\subsection{Parâmetros de Detecção}
+
+\begin{lstlisting}[language=python]
+# Parâmetros MediaPipe
+mp_pose.Pose(min_detection_confidence=0.7)
+mp_face_mesh.FaceMesh(refine_landmarks=True)
+
+# Parâmetros dlib
+EAR_THRESHOLD = 0.20
+CONSEC_FRAMES = 1
+\end{lstlisting}
+
+\subsection{Configurações de Performance}
+
+\begin{lstlisting}[language=python]
+# Reduzir resolução para melhor performance
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
+# Ajustar FPS
+cap.set(cv2.CAP_PROP_FPS, 15)
+\end{lstlisting}
+
+\end{document} 
